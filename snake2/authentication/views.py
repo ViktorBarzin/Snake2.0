@@ -36,7 +36,11 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             auth_login(request, user)
-            import ipdb; ipdb.set_trace()# BREAKPOINT)
+
+            # Check if redirection is needed
+            redirect_url = request.GET.get('next')
+            if redirect_url:
+                return HttpResponseRedirect(redirect_url)
 
             return HttpResponseRedirect(reverse('baseapp:index'))
         return HttpResponse('nema takav')
