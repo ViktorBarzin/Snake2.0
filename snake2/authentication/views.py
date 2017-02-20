@@ -2,22 +2,23 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from authentication.forms import RegistrationForm, LoginForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login
 
 # Create your views here.
-from django.contrib.auth import login as auth_login
 
 
 def register_view(request):
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
 
         form = RegistrationForm(request.POST)
         if form.is_valid():
             # TODO: hash password!
-            form.save()
+            # form.save()
+            user = User.objects.create_user(username=form.data.get('username',''),
+                email=form.data.get('email', ''),
+                password=form.data.get('password', '')
+            )
             # return HttpResponse('ok')
-            user = authenticate(username=form.data.get('username', ''), password=form.data.get('password', ''))
 
             return HttpResponseRedirect(reverse('login'))
 
@@ -29,11 +30,15 @@ def register_view(request):
 
 def login(request):
     if request.method == 'POST':
-        import ipdb; ipdb.set_trace()
-        user = User.objects.filter(username=request.POST.get('username', ''), password=request.POST.get('password', ''))
-        # user = authenticate(user=request.POST.get('username', ''), password=request.POST.get('password', ''))
-        if user:
-            return HttpResponse('logna se')
+        # user = User.objects.filter(username=request.POST.get('username', ''), password=request.POST.get('password', ''))
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            import ipdb; ipdb.set_trace()# BREAKPOINT)
+
+            return HttpResponseRedirect(reverse('baseapp:index'))
         return HttpResponse('nema takav')
     form = LoginForm()
     return render(request, 'registration/login.html', locals())
