@@ -2,4 +2,7 @@ you get here after you logged in
 and should see the index page
 where you can join/create games
 <br/>
-<a href="{% url 'lobby' %}" >To lobby</a>
+<form action="/lobby/new" method="GET">
+    {% csrf_token %}
+    <input type="submit" value="Create Lobby" />
+</form>

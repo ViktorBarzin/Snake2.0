@@ -3,5 +3,7 @@ from lobby import views as lobby_views
 
 
 urlpatterns = [
-    url(r'^$', lobby_views.index, name='lobby')
+    url(r'^(?P<lobby_id>[0-9]+)$', lobby_views.index, name='lobby'),
+    url(r'new/', lobby_views.create_lobby, name='new'),
+    url(r'delete/(?P<lobby_id>[0-9]+)$', lobby_views.delete_lobby)
 ]

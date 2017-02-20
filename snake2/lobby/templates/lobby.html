@@ -1,2 +1,10 @@
 This is the game lobby <br/>
 Here players will gather for starting a game
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Invite friends(Does not work yet)" />
+</form>
+
+<form action="lobby/delete/{{ lobby.id }}" method="GET">
+    <input type="submit" value="Exit lobby" />
+</form>

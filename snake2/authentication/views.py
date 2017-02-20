@@ -18,6 +18,7 @@ def register_view(request):
                 email=form.data.get('email', ''),
                 password=form.data.get('password', '')
             )
+            user.save()
             # return HttpResponse('ok')
 
             return HttpResponseRedirect(reverse('login'))
