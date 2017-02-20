@@ -20,7 +20,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^account/', include('registration.backends.simple.urls'), name='register'),
-    url(r'account/', include('authentication.urls')),
+    url(r'^account/', include('authentication.urls')),
+    url(r'^game/', include('game.urls')),
     url(r'^lobby/', include('lobby.urls'), name='lobby'),
-    url(r'^index/', include('baseapp.urls'), name='index'),
+    url(r'^index/', include('baseapp.urls', namespace='baseapp'), name='index'),
 ]

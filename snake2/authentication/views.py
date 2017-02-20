@@ -35,7 +35,10 @@ def login(request):
         password = request.POST.get('password', '')
         user = authenticate(username=username, password=password)
         if user is not None:
-            return HttpResponse('logna se')
+            auth_login(request, user)
+            import ipdb; ipdb.set_trace()# BREAKPOINT)
+
+            return HttpResponseRedirect(reverse('baseapp:index'))
         return HttpResponse('nema takav')
     form = LoginForm()
     return render(request, 'registration/login.html', locals())
