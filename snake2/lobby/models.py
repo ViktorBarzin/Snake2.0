@@ -11,21 +11,7 @@ from django.contrib.auth.models import User
 class Lobby(models.Model):
     id = models.AutoField(primary_key=True)
     is_full = models.BooleanField()
-    # TODO: null=True on owner is not a good idea;
-    # consider making some sort of superuser the default owner of all lobbies?
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 
-
-# Profile should be in another module but due to circular import errors it is here..
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    lobby = models.ForeignKey(Lobby, on_delete=models.CASCADE, null=True, related_name='users')
-
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            Profile.objects.create(user=instance)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+class Profile(User):
+    lobby = models.ForeignKey(Lobby, related_name='users', on_delete=models.PROTECT, null=True, blank=True)
+    lobby_owned = models.OneToOneField(Lobby, related_name='owner', on_delete=models.PROTECT, null=True, blank=True)

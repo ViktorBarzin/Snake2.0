@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from authentication.forms import RegistrationForm, LoginForm
 from django.contrib.auth.models import User
+from lobby.models import Profile
 from django.contrib.auth import authenticate, login as auth_login
 
 # Create your views here.
@@ -14,7 +15,7 @@ def register_view(request):
         if form.is_valid():
             # TODO: hash password!
             # form.save()
-            user = User.objects.create_user(username=form.data.get('username',''),
+            user = Profile.objects.create_user(username=form.data.get('username',''),
                 email=form.data.get('email', ''),
                 password=form.data.get('password', '')
             )
