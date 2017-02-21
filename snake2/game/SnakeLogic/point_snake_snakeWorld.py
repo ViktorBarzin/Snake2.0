@@ -6,7 +6,7 @@ from subprocess import call
 
 class Point:
 
-    def __init__(self, coords, data_cont=None):
+    def __init__(self, coords, data_cont='.'):
         # content: b: body, h: head, f: food
         # empty point: .
         self.cord_x = coords[0]
@@ -15,8 +15,10 @@ class Point:
 
     def __add__(self, other, mod_compare=None):
         if mod_compare:
-            self.cord_x = (self.cord_x + other.cord_x)%mod_compare
-            self.cord_y = (self.cord_y + other.cord_y)%mod_compare
+            self.cord_x = (self.cord_x +
+                           other.cord_x) % mod_compare
+            self.cord_y = (self.cord_y +
+                           other.cord_y) % mod_compare
             return self
         self.cord_x = self.cord_x + other.cord_x
         self.cord_y = self.cord_y + other.cord_y
@@ -24,16 +26,18 @@ class Point:
 
     def __sub__(self, other, mod_compare=None):
         if mod_compare:
-            self.cord_x = (self.cord_x - other.cord_x)%mod_compare
-            self.cord_y = (self.cord_y - other.cord_y)%mod_compare
+            self.cord_x = (self.cord_x -
+                           other.cord_x) % mod_compare
+            self.cord_y = (self.cord_y -
+                           other.cord_y) % mod_compare
             return self
         self.cord_x = self.cord_x - other.cord_x
         self.cord_y = self.cord_y - other.cord_y
         return self
 
     def __mod__(self, mod_value):
-        self.cord_x = self.cord_x%mod_value
-        self.cord_y = self.cord_y%mod_value
+        self.cord_x = self.cord_x % mod_value
+        self.cord_y = self.cord_y % mod_value
         return self
 
     def __str__(self):
@@ -48,16 +52,17 @@ class Point:
     def __hash__(self):
         return hash(self.cord_x)
 
-
     def get_content(self):
         return self.data_cont
 
     def oposite_points(self, other):
         # import ipdb; ipdb.set_trace()
-        return self.cord_x == -1*(other.cord_x) and self.cord_y == -1*(other.cord_y)
+        return self.cord_x == -1 * (
+            other.cord_x) and self.cord_y == -1 * (other.cord_y)
 
     def has_arg(self, arg):
         return self.cord_x == arg or self.cord_y == arg
+
 
 class Snake:
 
@@ -70,10 +75,10 @@ class Snake:
         self.is_alive = is_alive
 
         self.directions = {
-                'up': Point((-1, 0)),
-                'down': Point((1, 0)),
-                'right': Point((0, 1)),
-                'left': Point((0, -1))
+            'up': Point((-1, 0)),
+            'down': Point((1, 0)),
+            'right': Point((0, 1)),
+            'left': Point((0, -1))
         }
 
         self.curr_dir = self.create_curr_dir()
@@ -98,8 +103,8 @@ class Snake:
             new_body.extend(self.body[:-1])
             self.body = new_body
             if field_size:
-                self.head = (self.head + self.directions[direct])%field_size
-            #else:
+                self.head = (self.head + self.directions[direct]) % field_size
+            # else:
             #    self.head = self.head + self.directions[direct]
             self.curr_dir = self.create_curr_dir()
 
@@ -112,7 +117,7 @@ class Snake:
                 return True
         return point == self.head
 
-   # snake will grow after next move
+    # snake will grow after next move
     def grow(self):
         self.body.extend([Point((0, 0))])
         self.size += 1
@@ -126,20 +131,38 @@ class Snake:
 
 class SnakeWorld:
 
-
     def __init__(self, world_size=16, num_of_players=4):
         self.starting_pos = {
-                0: Snake(Point((4, 4), '0'), [Point((4, 3), '1'), Point((4, 2), '1')], snk_id=0),
-                1: Snake(Point((6, 12), '2'), [Point((5, 12), '3'), Point((4, 12), '3')], snk_id=1),
-                2: Snake(Point((12, 10), '4'), [Point((12, 11), '5'), Point((12, 12), '5')], snk_id=2),
-                3: Snake(Point((10, 4), '6'), [Point((11, 4), '7'), Point((12, 4), '7')], snk_id=3)
+            0: Snake(
+                Point(
+                    (4, 4), '0'), [
+                    Point((4, 3), '1'), Point((4, 2), '1')], snk_id=0),
+            1: Snake(
+                Point(
+                    (6, 12), '2'), [
+                    Point((5, 12), '3'), Point((4, 12), '3')], snk_id=1),
+            2: Snake(
+                Point(
+                    (12, 10), '4'), [
+                    Point((12, 11), '5'), Point((12, 12), '5')], snk_id=2),
+            3: Snake(
+                Point(
+                    (10, 4), '6'), [
+                    Point((11, 4), '7'), Point((12, 4), '7')], snk_id=3),
+            4: Snake(
+                Point(
+                    (8, 2), '8'), [
+                    Point((9, 2), '9'), Point((10, 2), '9')], snk_id=4),
+            5: Snake(
+                Point(
+                    (3, 4), '10'), [
+                    Point((3, 5), '11'), Point((3, 6), '11')], snk_id=5)
         }
 
         self.snakes = self.prepare_snakes(num_of_players)
         self.world_size = world_size
-        self.food = Point((3, 4), 'f')  # self.drop_food()
+        self.food = Point((3, 3), 'f')  # self.drop_food()
         self.num_of_players = num_of_players
-
 
     def prepare_snakes(self, num):
         snakes = {}
@@ -153,7 +176,8 @@ class SnakeWorld:
         res = ''
         for row in range(self.world_size):
             for col in range(self.world_size):
-                if self.point_exists_in_snake(Point((row, col))):
+                if self.point_exists_in_snake(
+                        Point((row, col))) and self.snake_alive(row, col):
                     # import ipdb; ipdb.set_trace()
                     curr_snake = self.point_to_snake(Point((row, col)))
                     res += curr_snake.get_point_content(Point((row, col)))
@@ -167,12 +191,17 @@ class SnakeWorld:
         res += '(' + str(self.snakes[1].head.cord_x) + ', ' + str(self.snakes[1].head.cord_y) + ')\n'
         res += '(' + str(self.snakes[2].head.cord_x) + ', ' + str(self.snakes[2].head.cord_y) + ')\n'
         res += '(' + str(self.snakes[3].head.cord_x) + ', ' + str(self.snakes[3].head.cord_y) + ')\n'
+        res += '(' + str(self.snakes[4].head.cord_x) + ', ' + str(self.snakes[4].head.cord_y) + ')\n'
+        res += '(' + str(self.snakes[5].head.cord_x) + ', ' + str(self.snakes[5].head.cord_y) + ')\n'
         return res
 
-    def point_to_snake(self, point, skip_curr_snake=None):
-        if skip_curr_snake:
+    def snake_alive(self, row, col):
+        return self.point_to_snake(Point((row, col))).is_alive
+
+    def point_to_snake(self, point, skip_snake=None):
+        if skip_snake:
             for s_id, snake in self.snakes.items():
-                if s_id == curr_snake:
+                if s_id == skip_snake:
                     continue
                 if snake.point_in(point):
                     return True
@@ -202,7 +231,7 @@ class SnakeWorld:
 
     def move_snakes(self, new_directions):
         for key, value in new_directions.items():
-            import ipdb; ipdb.set_trace()
+            # import ipdb; ipdb.set_trace()
             self.snakes[key].move(value, self.world_size)
         self.something_happened()
 
@@ -211,20 +240,22 @@ class SnakeWorld:
         self.snake_ate()
 
     def check_for_colision(self):
-        pass
+        for s_id, snake in self.snakes.items():
+            try:
+                if self.point_to_snake(snake.head, skip_snake=s_id).is_alive():
+                    self.snakes[s_id].is_alive = False
+            except Exception:
+                pass
 
     def snake_ate(self):
-        pass
-        # if self.point_exists_in_snake(self.food):
-        #     for id_s, snake in self.snakes.items():
-        #        if not snake.point_in(self.food):
-        #            snake.grow()
+        if self.point_exists_in_snake(self.food):
+            for s_id, snake in self.snakes.items():
+                if not snake.point_in(self.food):
+                    snake.grow()
 
 
 def main():
-    # snk1 = Snake(Point((1, 1), 'h'), [Point((1, 2), 'b'), Point((1, 3), 'b')])
-    # snk2 = Snake(Point((3, 1), 'h'), [Point((3, 2), 'b'), Point((3, 3), 'b')])
-    my_world = SnakeWorld(16, 4)
+    my_world = SnakeWorld(world_size=16, num_of_players=6)
     # import ipdb; ipdb.set_trace()
     for i in range(100):
         call(['clear'])
@@ -233,9 +264,10 @@ def main():
             0: 'left',
             1: 'down',
             2: 'right',
-            3: 'left'
-            })
-        sleep(0.1)
+            3: 'left',
+            4: 'right',
+            5: 'left'})
+        sleep(0.5)
 
 
 if __name__ == '__main__':
