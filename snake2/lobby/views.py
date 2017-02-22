@@ -45,7 +45,7 @@ def create_lobby(request):
         # join_lobby(user, lobby)
         pass
 
-        return redirect(f'/lobby/{lobby.id}')
+        return redirect('/lobby/{}'.format(lobby.id))
 
 
 @login_required(login_url='login')
@@ -61,7 +61,7 @@ def delete_lobby(request, lobby_id):
             lobby.delete()
 
     else:
-        raise ValueError(f'There is no lobby with id "{lobby_id}"')
+        raise ValueError('There is no lobby with id "{}"'.format(lobby.id))
     return HttpResponseRedirect(reverse('baseapp:index'))
 
 
