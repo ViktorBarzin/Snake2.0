@@ -8,7 +8,7 @@ from lobby.models import Lobby
 
 @login_required(login_url='login')
 def index(request):
+    # import ipdb; ipdb.set_trace()# BREAKPOINT)
     lobbies = Lobby.objects.all()
-    import ipdb; ipdb.set_trace()# BREAKPOINT)
 
     return render(request, 'index.html', locals())

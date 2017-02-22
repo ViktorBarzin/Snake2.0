@@ -15,7 +15,7 @@ class Profile(User):
     games_played = models.IntegerField(default=0)
     win_ratio = models.FloatField(default=0)
     # date_joined = models.DateTimeField()
-    profile_picture_url = models.CharField(max_length=255,null=True)
+    profile_picture_url = models.CharField(max_length=255, null=True)
 
     def get_win_ratio(self):
         if games_played == 0:
