@@ -3,38 +3,33 @@
 
 {% block content %}
  <div class="row">
-   <div class="col-md-4 pano-transparant">
-     <div class="user-profile ">
-           <div class="col-md-12 text-info">
+ </div>
+ <div class="row">
+   <div class="col-md-12 col-md-offset-2 content">
+       <div class="col-md-5 col-md-offset-1 pano-transparant">
+         <div class="user-profile ">
+               <div class="col-md-12 text-info">
 
-             <p>Hello, {{ user.username }}!</p>
-           </div>
-           <div>
-                 <form action="" method="GET">
-                     {% csrf_token %}
-                     <input class="btn btn-primary btn-block" type="submit" value="Create Game" />
-                </form>
-                 <form action="/lobby/new" method="GET">
-                     {% csrf_token %}
-                     <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
-                </form>
+                 <p>Hello, {{ user.username }}!</p>
+               </div>
+               <div>
+                     <form action="/lobby/new" method="GET">
+                         {% csrf_token %}
+                         <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
+                    </form>
+              </div>
           </div>
-      </div>
-   </div>
-   <div class="col-md-4 pano-transparant">
-     <div class="list-lobby info-panel ">
-       <div>
-         <div class="col-md-12 text-info">
-           <p>List lobbies</p>
-         </div>
-            <button class="btn btn-primary btn-block">Create Game </button>
-             <form action="/lobby/new" method="GET">
-                 {% csrf_token %}
-                 <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
-               </form>
-      </div>
-     </div>
+       </div>
+       <div class="col-md-5 col-md-offset-1 pano-transparant">
+         <div class="list-lobby info-panel ">
+           <div>
+             <div class="col-md-12 text-info">
+               <p>List lobbies</p>
+             </div>
 
+          </div>
+     </div>
+   </div>
    </div>
  </div>
 {% endblock %}
