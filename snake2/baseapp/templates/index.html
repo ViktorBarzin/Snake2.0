@@ -25,7 +25,12 @@
            <div>
              <div class="col-md-12 text-info">
                <p>List lobbies</p>
-             </div>
+            </div>
+            <div class="user-list">
+              {% for lobby in lobbies %}
+              <a href="/lobby/{{ lobby.id }}" class="user-list">Lobby {{ lobby.id }} </a>
+              {% endfor %}
+              </div>
 
           </div>
      </div>
