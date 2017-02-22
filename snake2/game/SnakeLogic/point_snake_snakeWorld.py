@@ -96,7 +96,7 @@ class Snake:
 
     def move(self, direct, field_size=None):
         if self.directions[direct].oposite_points(self.curr_dir['point']):
-            self.move(self.curr_dir['dir'])
+            self.move(self.curr_dir['dir'], field_size)
         else:
             new_body = [deepcopy(self.head)]
             new_body[0].data_cont = self.body[0].data_cont
@@ -104,8 +104,8 @@ class Snake:
             self.body = new_body
             if field_size:
                 self.head = (self.head + self.directions[direct]) % field_size
-            # else:
-            #    self.head = self.head + self.directions[direct]
+            elif field_size is None:
+                self.head = self.head + self.directions[direct]
             self.curr_dir = self.create_curr_dir()
 
     def check_for_border_walking(self, point, max_n):
@@ -232,7 +232,7 @@ class SnakeWorld:
     def move_snakes(self, new_directions):
         for key, value in new_directions.items():
             # import ipdb; ipdb.set_trace()
-            self.snakes[key].move(value, self.world_size)
+            self.snakes[key].move(value, field_size=self.world_size)
         self.something_happened()
 
     def something_happened(self):
@@ -261,9 +261,10 @@ def main():
         call(['clear'])
         print(my_world.get_world())
         my_world.move_snakes({
-            0: 'left',
+
+            0: 'right',
             1: 'down',
-            2: 'right',
+            2: 'left',
             3: 'left',
             4: 'right',
             5: 'left'})
