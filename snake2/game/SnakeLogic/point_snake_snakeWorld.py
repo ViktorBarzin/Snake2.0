@@ -266,20 +266,23 @@ class SnakeWorld:
                     snake.grow()
             self.food = self.drop_food()
 
-    # def handle_game(self):
-    #     while not self.game_over:
-    #         yield self.get_world()
-    #         self.move_snakes(self.get_directs())
-    #         sleep(0.5)
+    def handle_game(self):
+        while not self.game_over:
+            yield self.get_world()
+            self.move_snakes(self.get_directs())
+            sleep(0.5)
+        return self.get_winner()
 
+    def get_winner(self):
+        for s_id, value in self.snakes.items():
+            return s_id
+        return None
 
-    # def get_directs(self):
-    #     if django.wait.for.event.:
-    #         return django.wait.renchinadl
-    #     return {
-    #             0: False
-    #             1: False
-    #     }
+    def get_directs(self):
+        comms = get_comms()
+        for id, command in user_comands:
+            comms[id]= command
+        return comms
 
 
 def main():
