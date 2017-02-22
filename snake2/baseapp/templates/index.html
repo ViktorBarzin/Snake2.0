@@ -1,14 +1,40 @@
 {% extends "base.html" %}
 
+
 {% block content %}
  <div class="row">
-   <div class="col-md-4">
-     <button class=""btn btn-primary btn-block>Create Game </button>
+   <div class="col-md-4 pano-transparant">
+     <div class="user-profile ">
+           <div class="col-md-12 text-info">
 
+             <p>Hello, {{ user.username }}!</p>
+           </div>
+           <div>
+                 <form action="" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary btn-block" type="submit" value="Create Game" />
+                </form>
+                 <form action="/lobby/new" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
+                </form>
+          </div>
+      </div>
    </div>
-   <div class="col-md-4-offset-4" class="info-panel">
-        <a href="{% url 'lobby' %}" >To lobby</a>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+   <div class="col-md-4 pano-transparant">
+     <div class="list-lobby info-panel ">
+       <div>
+         <div class="col-md-12 text-info">
+           <p>List lobbies</p>
+         </div>
+            <button class="btn btn-primary btn-block">Create Game </button>
+             <form action="/lobby/new" method="GET">
+                 {% csrf_token %}
+                 <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
+               </form>
+      </div>
+     </div>
+
    </div>
  </div>
 {% endblock %}
