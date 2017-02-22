@@ -1,0 +1,26 @@
+
+.pano-transparant{
+  background-color: rgba(255, 255, 255, 0.4);
+  border: solid #948989 2px;
+  border-radius: 20px;
+
+    width: 20% ;
+    height: 80%;
+    padding: 30px;
+    margin: 10% ;
+}
+
+.btn{
+  vertical-align: bottom;
+  margin: 20px auto;;
+}
+
+.text-info{
+  color: black;
+  background-color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 30px;
+  font-size: 1em;
+  font-family: sans-serif;
+  padding: 5px;
+  text-align: center;
+}

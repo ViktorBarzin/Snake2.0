@@ -1,8 +1,40 @@
-you get here after you logged in
-and should see the index page
-where you can join/create games
-<br/>
-<form action="/lobby/new" method="GET">
-    {% csrf_token %}
-    <input type="submit" value="Create Lobby" />
-</form>
+{% extends "base.html" %}
+
+
+{% block content %}
+ <div class="row">
+   <div class="col-md-4 pano-transparant">
+     <div class="user-profile ">
+           <div class="col-md-12 text-info">
+
+             <p>Hello, {{ user.username }}!</p>
+           </div>
+           <div>
+                 <form action="" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary btn-block" type="submit" value="Create Game" />
+                </form>
+                 <form action="/lobby/new" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
+                </form>
+          </div>
+      </div>
+   </div>
+   <div class="col-md-4 pano-transparant">
+     <div class="list-lobby info-panel ">
+       <div>
+         <div class="col-md-12 text-info">
+           <p>List lobbies</p>
+         </div>
+            <button class="btn btn-primary btn-block">Create Game </button>
+             <form action="/lobby/new" method="GET">
+                 {% csrf_token %}
+                 <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
+               </form>
+      </div>
+     </div>
+
+   </div>
+ </div>
+{% endblock %}

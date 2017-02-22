@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from authentication.forms import RegistrationForm, LoginForm
 from django.contrib.auth.models import User
-from lobby.models import Profile
+from authentication.models import Profile
 from django.contrib.auth import authenticate, login as auth_login
 
 # Create your views here.
