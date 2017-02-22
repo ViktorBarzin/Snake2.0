@@ -95,6 +95,8 @@ class Snake:
                 }
 
     def move(self, direct, field_size=None):
+        if not direct:
+            direct = self.curr_dir
         if self.directions[direct].oposite_points(self.curr_dir['point']):
             self.move(self.curr_dir['dir'], field_size)
         else:
@@ -128,10 +130,13 @@ class Snake:
                 return pt.get_content()
         return self.head.get_content()
 
+    def died(self):
+        self.is_alive = False
+
 
 class SnakeWorld:
 
-    def __init__(self, world_size=16, num_of_players=4):
+    def __init__(self, world_size=16, num_of_players=4, game_over=False):
         self.starting_pos = {
             0: Snake(
                 Point(
@@ -143,26 +148,20 @@ class SnakeWorld:
                     Point((5, 12), '3'), Point((4, 12), '3')], snk_id=1),
             2: Snake(
                 Point(
-                    (12, 10), '4'), [
-                    Point((12, 11), '5'), Point((12, 12), '5')], snk_id=2),
+                    (4, 10), '4'), [
+                    Point((4, 11), '5'), Point((4, 12), '5')], snk_id=2),
             3: Snake(
                 Point(
                     (10, 4), '6'), [
                     Point((11, 4), '7'), Point((12, 4), '7')], snk_id=3),
-            4: Snake(
-                Point(
-                    (8, 2), '8'), [
-                    Point((9, 2), '9'), Point((10, 2), '9')], snk_id=4),
-            5: Snake(
-                Point(
-                    (3, 4), '10'), [
-                    Point((3, 5), '11'), Point((3, 6), '11')], snk_id=5)
         }
 
-        self.snakes = self.prepare_snakes(num_of_players)
         self.world_size = world_size
-        self.food = Point((3, 3), 'f')  # self.drop_food()
+        self.snakes = self.prepare_snakes(num_of_players)
+        self.food = Point((8, 12), 'f')  # self.drop_food()
         self.num_of_players = num_of_players
+        self.num_of_alive = num_of_players
+        self.game_over = game_over
 
     def prepare_snakes(self, num):
         snakes = {}
@@ -179,7 +178,7 @@ class SnakeWorld:
                 if self.point_exists_in_snake(
                         Point((row, col))) and self.snake_alive(row, col):
                     # import ipdb; ipdb.set_trace()
-                    curr_snake = self.point_to_snake(Point((row, col)))
+                    curr_snake = self.point_belongs_snake(Point((row, col)))
                     res += curr_snake.get_point_content(Point((row, col)))
                 elif self.food == Point((row, col)):
                     res += 'f'
@@ -187,32 +186,27 @@ class SnakeWorld:
                     res += '.'
             res += '\n'
 
-        res += 3*'\n' + '(' + str(self.snakes[0].head.cord_x) + ', ' + str(self.snakes[0].head.cord_y) + ')\n'
-        res += '(' + str(self.snakes[1].head.cord_x) + ', ' + str(self.snakes[1].head.cord_y) + ')\n'
-        res += '(' + str(self.snakes[2].head.cord_x) + ', ' + str(self.snakes[2].head.cord_y) + ')\n'
-        res += '(' + str(self.snakes[3].head.cord_x) + ', ' + str(self.snakes[3].head.cord_y) + ')\n'
-        res += '(' + str(self.snakes[4].head.cord_x) + ', ' + str(self.snakes[4].head.cord_y) + ')\n'
-        res += '(' + str(self.snakes[5].head.cord_x) + ', ' + str(self.snakes[5].head.cord_y) + ')\n'
         return res
 
     def snake_alive(self, row, col):
-        return self.point_to_snake(Point((row, col))).is_alive
+        return self.point_belongs_snake(Point((row, col))).is_alive
 
-    def point_to_snake(self, point, skip_snake=None):
-        if skip_snake:
-            for s_id, snake in self.snakes.items():
-                if s_id == skip_snake:
-                    continue
-                if snake.point_in(point):
-                    return True
-            # import ipdb; ipdb.set_trace()
-            return False
-        else:
-            for s_id, snake in self.snakes.items():
-                if snake.point_in(point):
-                    return snake
-            # import ipdb; ipdb.set_trace()
-            return False
+    def point_belongs_snake(self, point):
+        for s_id, snake in self.snakes.items():
+            if snake.point_in(point):
+                return snake
+        # import ipdb; ipdb.set_trace()
+        return False
+
+
+    def point_in_other_snakes(self, point, skip_snake=None):
+        for s_id, snakfe in self.snakes.items():
+            if s_id == skip_snake:
+                continue
+            if snake.point_in(point):
+                return snake
+        # import ipdb; ipdb.set_trace()
+        return False
 
     def drop_food(self):
         new_x = randint(0, self.world_size)
@@ -222,7 +216,7 @@ class SnakeWorld:
             new_y = randint(0, self.world_size)
         return Point((new_x, new_y))
 
-    def point_exists_in_snake(self, point):
+    def point_exists_in_snake(self, point, skip_snake=None):
         # import ipdb; ipdb.set_trace()
         for snake_id, snake in self.snakes.items():
             if snake.point_in(point):
@@ -231,31 +225,65 @@ class SnakeWorld:
 
     def move_snakes(self, new_directions):
         for key, value in new_directions.items():
-            # import ipdb; ipdb.set_trace()
-            self.snakes[key].move(value, field_size=self.world_size)
+            if key in self.snakes:
+                self.snakes[key].move(value, field_size=self.world_size)
         self.something_happened()
 
     def something_happened(self):
         self.check_for_colision()
         self.snake_ate()
 
-    def check_for_colision(self):
+    def in_other_snake(self, curr_head, curr_id):
         for s_id, snake in self.snakes.items():
-            try:
-                if self.point_to_snake(snake.head, skip_snake=s_id).is_alive():
-                    self.snakes[s_id].is_alive = False
-            except Exception:
-                pass
+            if s_id == curr_id:
+                continue
+            if snake.point_in(curr_head):
+                return snake
+        return False
+
+    def check_for_colision(self):
+        temp_dict = deepcopy(self.snakes)
+        for s_id, snake in temp_dict.items():
+            if self.in_other_snake(curr_head=snake.head, curr_id=s_id):
+                self.which_snake(snake.head).died()
+                self.snakes.pop(s_id, snake)
+                self.kill_game()
+
+    def kill_game(self):
+        self.num_of_alive -= 1
+        if self.num_of_alive < 2:
+            self.game_over = True
+
+    def which_snake(self, curr_head):
+        for s_id, snake in self.snakes.items():
+            if snake.head == curr_head:
+                return snake
 
     def snake_ate(self):
         if self.point_exists_in_snake(self.food):
             for s_id, snake in self.snakes.items():
                 if not snake.point_in(self.food):
                     snake.grow()
+            self.food = self.drop_food()
+
+    # def handle_game(self):
+    #     while not self.game_over:
+    #         yield self.get_world()
+    #         self.move_snakes(self.get_directs())
+    #         sleep(0.5)
+
+
+    # def get_directs(self):
+    #     if django.wait.for.event.:
+    #         return django.wait.renchinadl
+    #     return {
+    #             0: False
+    #             1: False
+    #     }
 
 
 def main():
-    my_world = SnakeWorld(world_size=16, num_of_players=6)
+    my_world = SnakeWorld(world_size=16, num_of_players=3)
     # import ipdb; ipdb.set_trace()
     for i in range(100):
         call(['clear'])
@@ -265,9 +293,8 @@ def main():
             0: 'right',
             1: 'down',
             2: 'left',
-            3: 'left',
-            4: 'right',
-            5: 'left'})
+            3: 'left',})
+        print(my_world.game_over)
         sleep(0.5)
 
 
