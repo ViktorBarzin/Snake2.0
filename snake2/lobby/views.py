@@ -21,7 +21,8 @@ def index(request, lobby_id):
         raise Http404('No such lobby')
     if isinstance(user, User):
         join_lobby(user, lobby)
-        return render(request, 'lobby.html', locals())
+    users = lobby.users.all()
+    return render(request, 'lobby.html', locals())
 
 
 @login_required(login_url='login')
