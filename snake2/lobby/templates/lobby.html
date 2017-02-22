@@ -1,14 +1,41 @@
-This is the game lobby <br/>
-Here players will gather for starting a game
-<form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Invite friends(Does not work yet)" />
-</form>
+{% extends "base.html" %}
 
-<form action="lobby/delete/{{ lobby.id }}" method="GET">
-    <input type="submit" value="Exit lobby" />
-</form>
 
-{% for user in lobby.users.all %}
-<h4> {{ user.username }} </h4>
-{% endfor %}
+{% block content %}
+ <div class="row">
+   <div class="col-md-4 pano-transparant">
+     <div class="user-profile ">
+           <div class="col-md-12">
+
+             <form action="" method="POST">
+                 {% csrf_token %}
+                 <input class="btn btn-primary btn-block"  type="submit" value="Invite friends(Does not work yet)" />
+             </form>
+           </div>
+           <div>
+                 <form action="/lobby/new" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
+                   </form>
+                   <form action="lobby/delete/{{ lobby.id }}" method="GET">
+                     {% csrf_token %}
+                       <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
+                   </form>
+          </div>
+      </div>
+   </div>
+   <div class="col-md-4 pano-transparant">
+     <div class="list-lobby info-panel ">
+       <div>
+         <div class="col-md-12 text-info">
+           <p>USERS</p>
+         </div>
+         {% for user in lobby.users.all %}
+         <h4> {{ user.username }} </h4>
+         {% endfor %}
+      </div>
+     </div>
+
+   </div>
+ </div>
+{% endblock %}

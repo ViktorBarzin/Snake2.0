@@ -8,6 +8,4 @@ from lobby.models import Lobby
 
 @login_required(login_url='login')
 def index(request):
-
-    return render(request, 'index.html', locals())
-
+   return render(request, 'index.html', locals())
