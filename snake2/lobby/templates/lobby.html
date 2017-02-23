@@ -37,18 +37,35 @@
        <div class="col-md-5 col-md-offset-1 pano-transparant">
          <div>
            <div class="col-md-12">
-
              <form action="" method="POST">
                  {% csrf_token %}
                  <input class="btn btn-primary btn-block"  type="submit" value="Invite friends" />
              </form>
            </div>
-           <div>
+           <div class="col-md-12 user-info">
 
-                   <form action="/lobby/leave/{{ lobby.id }}" method="POST">
-                     {% csrf_token %}
-                       <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
-                   </form>
+             <p>You are in lobby: {{ user.profile.lobby_id }}</p>
+           </div>
+           <div class="col-md-12">
+           <pre>
+             Lorem ipsum dolor sit amet, sodales eget wisi,
+             massa justo dui sed pharetra, metus aliquet,
+             arcu nunc viverra. Aliquam consequat augue quam sed orci,
+             praesent sed urna quis wisi. Nisl consectetuer et hymenaeos
+            ligula integer, elementum suspendisse ut turpis vel pharetra.
+            At morbi, aliquam morbi nam enim placerat enim ridiculus.
+             Ultricies etiam, ullamcorper mi lacinia. Elit vulputate et enim,
+                                  varius
+              dis viverra ac sodales maecenas aptent. Porttitor metus nunc vel
+              donec sed elementum, sed in sapien, tortor nonummy eros vestibulum
+              congue vel. Urna faucibus et iaculis pretium voluptas, dignissimos
+           </pre>
+         </div>
+           <div class="col-md-12">
+               <form action="/lobby/leave/{{ lobby.id }}" method="POST">
+                 {% csrf_token %}
+                   <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
+               </form>
           </div>
           </div>
        </div>
@@ -57,16 +74,19 @@
            <div class="col-md-12 text-info">
              <p>USERS</p>
            </div>
-           <ul id="users">
+           <ul id="users" class="user-info">
              {% for user in lobby.users.all %}
                {% csrf_token %}
              <li><h4  class="user-list"> {{ user.username }} </h4></li>
              {% endfor %}
            </ul>
+
+           <div class="col-md-12">
             <form action="/game" method="GET">
                 {% csrf_token %}
-                <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
+                <input class="btn btn-primary btn-block  btn-lg" type="submit" value="START GAME" />
               </form>
+            </div>
           </div>
      </div>
    </div>

@@ -9,16 +9,18 @@
        <div class="col-md-5 col-md-offset-1 pano-transparant">
          <div class="user-profile ">
                <div class="col-md-12 text-info">
-
-                 <p>Hello, {{ user.username }}!</p>
+                 <p class="user">Hello, {{ user.username }}!</p>
+                 <form class="user" action="/account/login" method="GET">
+                     {% csrf_token %}
+                     <input class="btn btn-primary user logout-btn" type="submit" value="Logout" />
+                </form>
                </div>
                <div class="col-md-12 user-info">
-
-                 <p>Hello, {{ user.username }}!</p>
-                 <p>Hello, {{ user.username }}!</p>
-                 <p>Hello, {{ user.username }}!</p>
-                 <p>Hello, {{ user.username }}!</p>
-                 <p>Hello, {{ user.username }}!</p>
+                 <p>Count of your game: {{ user.profile.games_played }}</p>
+                 <p>You win game: {{ user.profile.games_won }}</p>
+                 <p>Games played: {{ user.profile.games_played }}</p>
+                 <p>Choose lobby ----------></p>
+                 <p>or</p>
                </div>
 
                <div>
@@ -37,7 +39,9 @@
             </div>
             <ul class="user-list">
               {% for lobby in lobbies %}
+            <div class="col-md-12 lobby-background">  
             <li class="list-text">  <a href="/lobby/{{ lobby.id}}" class="user-list">Lobby {{ lobby.id }} </a></li>
+          </div>
               {% endfor %}
             </ul>
 
