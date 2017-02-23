@@ -48,7 +48,7 @@
                     {% csrf_token %}
                      <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
                    </form>
-                   <form action="/lobby/leave/{{ lobby.id }}" method="GET">
+                   <form action="/lobby/leave/{{ lobby.id }}" method="POST">
                      {% csrf_token %}
                        <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
                    </form>
