@@ -3,7 +3,7 @@ body{
 }
 
 .row{
-  height: 30%;
+  height: 20%;
 }
 .pano-transparant{
   border-radius: 15px;
@@ -19,7 +19,8 @@ body{
   margin: 20px auto;
 }
 
-.btn-primary {
+.btn-primary , .btn-primary:active, .btn-primary:visited,
+.btn-primary:focus{
   font-size: 20px;
     color: #611E20;
     background-color: #f9c54a;
@@ -31,8 +32,21 @@ body{
     border-color: #BB870B;
 }
 
+.user{
+  display: inline;
+
+}
+
+.username{
+    vertical-align: middle;
+}
+
+.logout-btn{
+  float: right;
+
+}
 .user-info{
-  margin-bottom: 12%;
+  margin-bottom: 5%;
 
 }
 
@@ -50,6 +64,7 @@ body{
 
 .user-list, .or, .user-info{
       text-align: center;
+
 }
 
 
@@ -66,7 +81,7 @@ a{
   color: #000;
 }
 
-.list-text, .user-info{
+.list-text, .user-info, .user-list{
   font-size: 30px;
 }
 
@@ -74,4 +89,9 @@ a{
     background-color: rgba(186, 236, 197, 0.4);
     border: solid #6b8a72 2px;
 
+  }
+
+  pre {
+    background-color: transparent;
+    border-color: #6b8a72
   }
