@@ -81,6 +81,21 @@ a{
   color: #000;
 }
 
+.lobby-background{
+  padding: 10px;
+
+}
+
+.lobby-background:hover{
+  background-color: rgba(236, 193, 63, 0.8);
+  border-radius: 5px;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #000;
+}
+
 .list-text, .user-info, .user-list{
   font-size: 30px;
 }
