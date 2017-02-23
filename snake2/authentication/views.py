@@ -21,6 +21,7 @@ def register_view(request):
             )
             user.save()
             # return HttpResponse('ok')
+            import ipdb; ipdb.set_trace()# BREAKPOINT)
 
             return HttpResponseRedirect(reverse('login'))
 
