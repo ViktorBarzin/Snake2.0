@@ -5,14 +5,22 @@
  <div class="row">
  </div>
  <div class="row">
-   <div class="col-md-12 col-md-offset-2 content">
+   <div class="col-md-12 content">
        <div class="col-md-5 col-md-offset-1 pano-transparant">
          <div class="user-profile ">
                <div class="col-md-12 text-info">
 
                  <p>Hello, {{ user.username }}!</p>
                </div>
-               <div>
+               <div class="col-md-12 user-info">
+
+                 <p>Hello, {{ user.username }}!</p>
+                 <p>Hello, {{ user.username }}!</p>
+                 <p>Hello, {{ user.username }}!</p>
+                 <p>Hello, {{ user.username }}!</p>
+                 <p>Hello, {{ user.username }}!</p>
+               </div>
+               <div class="bottom">
                      <form action="/lobby/new" method="GET">
                          {% csrf_token %}
                          <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
@@ -24,13 +32,13 @@
          <div class="list-lobby info-panel ">
            <div>
              <div class="col-md-12 text-info">
-               <p>List lobbies</p>
+               <p>LOBBIES</p>
             </div>
-            <div class="user-list">
+            <ul class="user-list">
               {% for lobby in lobbies %}
-              <a href="/lobby/{{ lobby.id }}" class="user-list">Lobby {{ lobby.id }} </a>
+            <li class="list-text">  <a href="/lobby/{{ lobby.id}}" class="user-list">Lobby {{ lobby.id }} </a></li>
               {% endfor %}
-              </div>
+            </ul>
 
           </div>
      </div>

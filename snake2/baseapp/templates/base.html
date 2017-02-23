@@ -8,35 +8,27 @@
 
    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    <link rel="stylesheet" type="text/css"  href="{% static "css/base.css" %}"> <!-- CSS -->
-      <link rel="stylesheet" type="text/css"  href="{% static "css/index.css" %}"> <!-- CSS -->
+   <link href="https://fonts.googleapis.com/css?family=Lato|Pangolin" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Lato|Pangolin|Roboto" rel="stylesheet"> 
+   <link rel="stylesheet" type="text/css"  href="{% static "css/index.css" %}"> <!-- CSS -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script>
-   $( document ).ready(function() {
+   <script src="https://player.vimeo.com/api/player.js"></script>
+   <script src="{% static "js/load-users.js" %}"></script>
 
-     $("#popUpRegister").modal('show');
-
-   });
-
-
-   $( document ).ready(function() {
-     $("#popUpWindow").modal('show');
-
-   });
-</script>
 </head>
 
 <body>
 
 
-  <div id="content">
+  <div class="container-fluid">
 
           {% block content %}
           {% endblock %}
   </div>
 
   <div class="iframe-wrapper">
-    <iframe src="https://player.vimeo.com/video/175698023?autoplay=1&loop=0&byline=0&title=0">
+    <iframe id="player"  wmode="transparent" src="https://player.vimeo.com/video/205352472?wmode=transparent&autoplay=1&loop=1&byline=0&title=0">
   </div>
 
 </body>

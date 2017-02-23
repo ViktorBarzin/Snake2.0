@@ -1,5 +1,5 @@
 from django.shortcuts import render, reverse, redirect
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.contrib.auth.models import User
@@ -86,3 +86,11 @@ def leave_lobby(user, lobby):
         import ipdb; ipdb.set_trace()
 
         lobby.users.remove(user.profile)
+
+
+def get_lobby_users(request, lobby_id):
+    import ipdb; ipdb.set_trace()
+    data = {
+        'users': Lobby.objects.filter(id=lobby_id).users
+    }
+    return JsonResponse(data)

@@ -16,11 +16,7 @@
              </form>
            </div>
            <div>
-                 <form action="new" method="GET">
-                     {% csrf_token %}
-                     <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
-                   </form>
-                   <form action="lobby/delete/{{ lobby.id }}" method="GET">
+                 <form action="lobby/delete/{{ lobby.id }}" method="GET">
                      {% csrf_token %}
                        <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
                    </form>
@@ -32,11 +28,16 @@
            <div class="col-md-12 text-info">
              <p>USERS</p>
            </div>
-           <div id="users">
+           <ul id="users">
              {% for user in lobby.users.all %}
-             <h4  class="user-list"> {{ user.username }} </h4>
+               {% csrf_token %}
+             <li><h4  class="user-list"> {{ user.username }} </h4></li>
              {% endfor %}
-             </div>
+           </ul>
+            <form action="new" method="GET">
+                {% csrf_token %}
+                <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
+              </form>
           </div>
      </div>
    </div>
