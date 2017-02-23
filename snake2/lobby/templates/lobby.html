@@ -2,6 +2,34 @@
 
 
 {% block content %}
+
+{% block javascript %}
+<script>
+    var lobby_id = {{ lobby.id  }}
+    setInterval(function(){
+    data = $.getJSON('/lobby/update_users_ajax', {'lobby_id': lobby_id}, function(data){
+    users_arr = []
+    $("#users").html("");
+    data.forEach(function(user){
+        console.log(user.user)
+        users_arr.push(user.user)
+            }
+        )
+
+    var users = users_arr;
+            for (var i = 0; i < users.length; i++) {
+                var elem = '<div clas="row">' + users[i] + '</div>';
+
+                $('#users').append(elem);
+            }
+    })
+    }, 2000)
+
+
+
+ </script>
+{% endblock %}
+
  <div class="row">
  </div>
  <div class="row">
@@ -17,10 +45,10 @@
            </div>
            <div>
                  <form action="new" method="GET">
-                     {% csrf_token %}
+                    {% csrf_token %}
                      <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
                    </form>
-                   <form action="lobby/delete/{{ lobby.id }}" method="GET">
+                   <form action="/lobby/leave/{{ lobby.id }}" method="GET">
                      {% csrf_token %}
                        <input class="btn btn-primary btn-block" type="submit" value="Exit lobby" />
                    </form>
