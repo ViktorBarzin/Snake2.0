@@ -1,5 +1,6 @@
 <html>
     <head>
+    {{ user_id_arrow }}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
         {% block javascript %}
@@ -48,6 +49,11 @@
  //
  //
 
+
+response = $.getJson('/game/update_game_ajax',{  }, function(){
+    // callback stuff
+    console.log(response)
+})
 
             </script>
         {% endblock %}

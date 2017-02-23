@@ -3,6 +3,8 @@ from random import randint
 from time import sleep
 from subprocess import call
 
+# from game.views import get_user_id_arrow
+
 
 class Point:
 
@@ -157,18 +159,18 @@ class SnakeWorld:
         }
 
         self.world_size = world_size
-        self.snakes = self.prepare_snakes(num_of_players)
+        self.snakes = self.starting_pos  # self.prepare_snakes(num_of_players)
         self.food = Point((8, 12), 'f')  # self.drop_food()
         self.num_of_players = num_of_players
         self.num_of_alive = num_of_players
         self.game_over = game_over
 
-    def prepare_snakes(self, num):
-        snakes = {}
+    def prepare_snakes(self, num, pl_ids):
+        new_snakes = {}
         for i in range(num):
             # import ipdb; ipdb.set_trace()
-            snakes[i] = self.starting_pos[i]
-        return snakes
+            new_snakes[pl_ids[i]] = self.starting_pos[i]
+        self.snakes = new_snakes
 
     # returns string representing every object, with it's data_content
     def get_world(self):
@@ -177,7 +179,7 @@ class SnakeWorld:
             for col in range(self.world_size):
                 if self.point_exists_in_snake(
                         Point((row, col))) and self.snake_alive(row, col):
-                    # import ipdb; ipdb.set_trace()
+                    import ipdb; ipdb.set_trace()
                     curr_snake = self.point_belongs_snake(Point((row, col)))
                     res += curr_snake.get_point_content(Point((row, col)))
                 elif self.food == Point((row, col)):
@@ -271,7 +273,7 @@ class SnakeWorld:
             yield self.get_world()
             self.move_snakes(self.get_directs())
             sleep(0.5)
-        return self.get_winner()
+        yield self.get_winner()
 
     def get_winner(self):
         for s_id, value in self.snakes.items():

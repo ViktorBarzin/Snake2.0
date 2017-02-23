@@ -1,21 +1,38 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+# from game.SnakeLogic.point_snake_snakeWorld import SnakeWorld
+from game.SnakeLogic.temp_to_update import start_game, update_game
+
 # Create your views here.
 
 # global variable which is used for ocmmunication between client and snake
 # logic
 user_id_arrow = {}
 
+
 @login_required(login_url = 'login')
 def index(request):
+    start_game(16,
+               len(list(get_user_id_arrow().keys())),
+               list(get_user_id_arrow().keys()))
     # Reset the user arrow dict so that everytime a game is created, the users
     # will be new with no initial moves
     # CAREFUL !!! PRONE TO BUGS !!! if something with arrows is not working,
     # delete the following line
-    user_id_arrow = {}
+    user_id_arrow ={}
     user = request.user
+    # field = SnakeWorld(16, 4).get_world()
     return render(request, 'game.html')
+
+
+def get_user_id_arrow():
+    global user_id_arrow
+    return user_id_arrow
+
+
+def update_game_field_ajax(request):
+    update_game(get_user_id_arrow())
 
 
 def get_arrows_ajax(request):
