@@ -15,7 +15,7 @@
         users_arr.push(user.user)
             }
         )
-
+    // This part formats users in front-end
     var users = users_arr;
             for (var i = 0; i < users.length; i++) {
                 var elem = '<div class="row"><h4 class="user-list">' + users[i] + ' </h4></div>';
@@ -63,7 +63,7 @@
              <li><h4  class="user-list"> {{ user.username }} </h4></li>
              {% endfor %}
            </ul>
-            <form action="new" method="GET">
+            <form action="/game" method="GET">
                 {% csrf_token %}
                 <input class="btn btn-primary btn-block" type="submit" value="START GAME" />
               </form>

@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+        {% block javascript %}
+            <script>
+            document.onkeydown = checkKey;
+            pressed_key = 'None'
+            function checkKey(e) {
+                e = e || window.event;
+                if (e.keyCode == '38') {
+                    // console.log('UP')
+                    pressed_key = 'up'
+                }
+                else if (e.keyCode == '40') {
+                    // down arrow
+                    // console.log('DOWN')
+                    pressed_key = 'down'
+                }
+                else if (e.keyCode == '37') {
+                    // console.log('LEFT')
+                    pressed_key = 'left'
+                }
+                else if (e.keyCode == '39') {
+                    // console.log('RIGHT')
+                    pressed_key = 'right'
+                }
+            }
+//--------------------
+ var lobby_id = {{ lobby.id  }}
+     setInterval(function(){
+
+ data = $.getJSON('/game/get_arrows_ajax',{ 'params': [{'lobby_id': lobby_id},{ 'user_id': {{ user.id }}}, { 'key': pressed_key}]} ,
+                function(data){
+                    // data is the formatted string to show to user or call parsers
+                    console.log(data)
+                }
+            )
+   }, 2000)
+
+ //var lobby_id = {{ lobby.id  }}
+ //data = $.getJSON('/game/get_arrows_ajax',{ 'params': [{'lobby_id': lobby_id},{ 'user_id': {{ user.id }}}, { 'key': pressed_key}]} ,
+ //                   function(data){
+ //                    // data is the formatted string to show to user or call parsers
+ //                    console.log(data)
+ //                }
+ //            )
+ //
+ //
+
+
+            </script>
+        {% endblock %}
+
+   </head>
+    <body>
+    </body>
+</html>
