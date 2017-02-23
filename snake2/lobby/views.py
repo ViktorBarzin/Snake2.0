@@ -1,9 +1,5 @@
 from django.shortcuts import render, reverse, redirect
-<<<<<<< HEAD
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden, JsonResponse
-=======
-from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponseBadRequest
->>>>>>> da5f639aa261d478619a0bf8a1465f7804213281
+from django.http import HttpResponse, HttpResponseRedirect, Http404, HttpResponseForbidden, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.contrib.auth.models import User
