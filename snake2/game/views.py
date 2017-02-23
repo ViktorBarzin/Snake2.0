@@ -29,7 +29,7 @@ def get_arrows_ajax(request):
     # Update dict
     update_parsed_directions({user_id : arrow})
     print('-' * 20 + str(user_id_arrow))
-    return HttpResponse({1:2})
+    return HttpResponse()
 
 
 def update_parsed_directions(user_id_arr):
