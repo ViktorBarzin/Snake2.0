@@ -18,7 +18,7 @@ def index(request, lobby_id):
     # if request.method == 'POST':
     #     invite_friends_link = create_invite_link()
 
-    import ipdb; ipdb.set_trace()# BREAKPOINT)
+    # import ipdb; ipdb.set_trace()# BREAKPOINT)
     user = request.user
     lobby = Lobby.objects.filter(id=lobby_id).first()
     if lobby is None:
@@ -35,7 +35,7 @@ def create_lobby(request):
     try:
         # lobby = Lobby.objects.create(is_full=False, owner=user.profile, users = [user.profile])
         lobby = Lobby.objects.create(is_full=False, owner=user.profile)
-        import ipdb; ipdb.set_trace()# BREAKPOINT)
+        # import ipdb; ipdb.set_trace()# BREAKPOINT)
         # Check if user is already in lobby
         join_lobby(user, lobby)
 
@@ -57,7 +57,7 @@ def create_lobby(request):
 # This is actually when user leaves lobby, not neccesasri delete lobby
 @login_required(login_url='login')
 def leave_lobby_view(request, lobby_id):
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     user = request.user
     lobby = Lobby.objects.filter(id=lobby_id).first()
     leave_lobby(user, lobby)
@@ -76,7 +76,7 @@ def invite_friends(request, lobby_id):
 
 
 def join_lobby(user, lobby):
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
 
     if user not in lobby.users.all(): # and user != lobby.owner:
         lobby.users.add(user.profile)
@@ -88,7 +88,7 @@ def leave_lobby(user, lobby):
         if user.profile not in lobby.users.all():
             raise ValueError('Cannot remove this user form the lobby because he has not joined it!')
         else:
-            import ipdb; ipdb.set_trace()
+            # import ipdb; ipdb.set_trace()
 
             lobby.users.remove(user.profile)
 
