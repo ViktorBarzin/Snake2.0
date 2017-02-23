@@ -21,3 +21,11 @@ class Profile(User):
         if games_played == 0:
             return 0
         return games_won / games_played
+
+    def set_field(self, new_field_dict):
+        key = list(new_field_dict.keys())[0]
+        value = new_field_dict[key]
+        if hasattr(self, key):
+            return self.key
+        setattr(self, key, value)
+        return self.__dict__[key]

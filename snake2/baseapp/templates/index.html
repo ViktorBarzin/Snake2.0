@@ -20,8 +20,9 @@
                  <p>Hello, {{ user.username }}!</p>
                  <p>Hello, {{ user.username }}!</p>
                </div>
-               <div class="bottom">
-                     <form action="/lobby/new" method="GET">
+
+               <div>
+                     <form action="/lobby/new/" method="POST">
                          {% csrf_token %}
                          <input class="btn btn-primary btn-block" type="submit" value="Create Lobby" />
                     </form>

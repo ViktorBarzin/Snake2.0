@@ -14,6 +14,7 @@ import os
 
 LOGIN_REDIRECT_URL = '/index'
 
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # AUTHENTICATION_BACKENDS = ('authentication.helpers.authentication_backend.Authentication',)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
