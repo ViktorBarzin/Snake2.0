@@ -15,7 +15,7 @@ snk = ''
 @login_required(login_url = 'login')
 def index(request):
     global snk
-    snk = start_game(16,
+    snk = start_game(28,
                len(list(get_user_id_arrow().keys())),
                list(get_user_id_arrow().keys()))
     # import ipdb; ipdb.set_trace()
@@ -58,4 +58,3 @@ def get_arrows_ajax(request):
 
 def update_parsed_directions(user_id_arr):
     user_id_arrow[list(user_id_arr.keys())[0]] = list(user_id_arr.values())[0]
-

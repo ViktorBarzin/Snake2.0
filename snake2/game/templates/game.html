@@ -1,3 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+
 <html>
     <head>
     {{ user_id_arrow }}
@@ -58,8 +65,8 @@ response = $.getJSON('/game/update_game_ajax',{  }, function(){
 , interval)
 
 function fieldParser(responsestr) {
-    var result =  ""
-    var blank = '<img src="/static/media/images/blankField.jpg" />'
+    var result = ''
+    var blank = '<img src="/static/media/images/blankField.jpg" style="opacity: 0.0;" />'
     var food = '<img src="/static/media/images/food.jpg" />'
     var head1 = '<img src="/static/media/images/head1.jpg" />'
     var body1 = '<img src="/static/media/images/body1.jpg" />'
@@ -79,7 +86,7 @@ function fieldParser(responsestr) {
                 break;
             case '1':
                 result += responsestr[i].replace('1', body1)
-                break; 
+                break;
             case '0':
                 result += responsestr[i].replace('0', head1)
                 break;
@@ -103,17 +110,17 @@ function fieldParser(responsestr) {
                 break;
             case '7':
                 result += responsestr[i].replace('7', body4)
-                break;       
+                break;
             default:
                 result += responsestr[i]
         }
     }
-    
+
     return result
 }
 
 function setCharToImage() {
-    $("#game").each(function() { 
+    $("#game").each(function() {
             $(this).html($(this).text().replace(/[.]/g, 'DOT'))});
 
     var text = document.getElementById('test').innerText;
@@ -125,7 +132,7 @@ function setCharToImage() {
 
     // switch (char) {
     //     case '.':
-            
+
     //         break;
         // case 'f':
         //     img.src="static/media/images/images.jpeg";
@@ -141,14 +148,21 @@ function setCharToImage() {
         //     break;
         // case '3':
         //     img.src="static/media/images/images.jpeg";
-        //     break;    
+        //     break;
     //}
 }
             </script>
         {% endblock %}
 
    </head>
-    <body>
+   <div class="row">
+   </div>
+   <div class="row content">
+      <div class="col-md-8 col-md-offset-4 pano-transparant">
         <div id='game'> </div>
-    </body>
+      </div>
+    </div>
+
 </html>
+
+{% endblock %}
