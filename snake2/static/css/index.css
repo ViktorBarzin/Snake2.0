@@ -8,12 +8,12 @@ label {
 }
 
 .row{
-  height: 20%;
+  height: 10%;
 }
 .pano-transparant{
   border-radius: 15px;
     width: 38% ;
-    min-height: 700px;
+    min-height: 450px;
     max-height: 600px;
     padding: 10px;
 

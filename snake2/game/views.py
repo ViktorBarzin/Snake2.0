@@ -15,7 +15,7 @@ snk = ''
 @login_required(login_url = 'login')
 def index(request):
     global snk
-    snk = start_game(28,
+    snk = start_game(22,
                len(list(get_user_id_arrow().keys())),
                list(get_user_id_arrow().keys()))
     # import ipdb; ipdb.set_trace()
