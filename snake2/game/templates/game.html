@@ -12,6 +12,7 @@
 
         {% block javascript %}
             <script>
+            $("body").css("overflow", "hidden");
             document.onkeydown = checkKey;
             pressed_key = 'down'
             function checkKey(e) {
