@@ -86,15 +86,17 @@ class Snake:
         self.curr_dir = self.create_curr_dir()
 
     def create_curr_dir(self):
-        direct = deepcopy(self.head) - self.body[0]
-        if not (direct.has_arg(1) or direct.has_arg(-1)):
-                return self.curr_dir
-        for key, value in self.directions.items():
-            if value == direct:
-                return {
-                    'dir': key,
-                    'point': value
-                }
+        if self.body:
+            direct = deepcopy(self.head) - self.body[0]
+            if not (direct.has_arg(1) or direct.has_arg(-1)):
+                    return self.curr_dir
+            for key, value in self.directions.items():
+                if value == direct:
+                    return {
+                        'dir': key,
+                        'point': value
+                    }
+        return self.curr_dir
 
     def move(self, direct, field_size=None):
         if not direct:
@@ -102,15 +104,22 @@ class Snake:
         if self.directions[direct].oposite_points(self.curr_dir['point']):
             self.move(self.curr_dir['dir'], field_size)
         else:
-            new_body = [deepcopy(self.head)]
-            new_body[0].data_cont = self.body[0].data_cont
-            new_body.extend(self.body[:-1])
-            self.body = new_body
-            if field_size:
-                self.head = (self.head + self.directions[direct]) % field_size
-            elif field_size is None:
-                self.head = self.head + self.directions[direct]
-            self.curr_dir = self.create_curr_dir()
+            if len(self.body) > 0:
+                new_body = [deepcopy(self.head)]
+                new_body[0].data_cont = self.body[0].data_cont
+                new_body.extend(self.body[:-1])
+                self.body = new_body
+                if field_size:
+                    self.head = (self.head + self.directions[direct]) % field_size
+                elif field_size is None:
+                    self.head = self.head + self.directions[direct]
+                self.curr_dir = self.create_curr_dir()
+            else:
+                if field_size:
+                        self.head = self.head + self.directions[direct] % field_size
+                elif field_size is None:
+                    self.head = (self.head + self.directions[direct])
+                self.curr_dir = self.create_curr_dir()
 
     def check_for_border_walking(self, point, max_n):
         pass
@@ -125,6 +134,14 @@ class Snake:
     def grow(self):
         self.body.extend([Point((0, 0))])
         self.size += 1
+
+    def un_grow(self):
+        if self.body:
+            del self.body[-1]
+            self.size -= 1
+        else:
+            del self.head
+            self.size = 0
 
     def get_point_content(self, point):
         for pt in self.body:
@@ -175,6 +192,8 @@ class SnakeWorld:
     # returns string representing every object, with it's data_content
     def get_world(self):
         res = ''
+        # if self.game_over:
+        #     return self.get_game_over()
         for row in range(self.world_size):
             for col in range(self.world_size):
                 if self.point_exists_in_snake(
@@ -189,6 +208,13 @@ class SnakeWorld:
             # res += '\n'
             res += '<br />'
 
+        return res
+
+    def get_game_over(self):
+        res = ''
+        res += (self.world_size*(self.world_size//2) + (self.world_size//2) - 5)*'*'
+        res += 'GAME OVER ! Winner is {}'.format(self.snakes.keys())
+        res += (self.world_size*(self.world_size//2) + (self.world_size//2) - 5)*'*'
         return res
 
     def snake_alive(self, row, col):
@@ -231,6 +257,7 @@ class SnakeWorld:
             if key in self.snakes:
                 self.snakes[key].move(value, field_size=self.world_size)
         self.something_happened()
+        # self.is_it_over()
 
     def something_happened(self):
         self.check_for_colision()
@@ -267,7 +294,10 @@ class SnakeWorld:
         if self.point_exists_in_snake(self.food):
             for s_id, snake in self.snakes.items():
                 if not snake.point_in(self.food):
-                    snake.grow()
+                    if len(snake.body) == 0:
+                        snake.died()
+                    else:
+                        snake.un_grow()
             self.food = self.drop_food()
 
     def handle_game(self, commands):
