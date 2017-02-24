@@ -71,6 +71,9 @@ label {
     color:white;
 }
 
+.helptext{
+    display:None
+}
 .user-list, .or, .user-info{
       text-align: center;
 

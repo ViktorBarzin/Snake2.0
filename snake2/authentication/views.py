@@ -11,14 +11,15 @@ from django.contrib.auth import authenticate, login as auth_login
 def register_view(request):
     if request.method == 'POST':
 
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             # TODO: hash password!
+
             # form.save()
             user = Profile.objects.create_user(username=form.data.get('username',''),
                 email=form.data.get('email', ''),
                 password=form.data.get('password', ''),
-                profile_picture_url=form.data.get('image', '')
+                profile_picture_url=request.FILES['profile_picture_url']
             )
             user.save()
             # return HttpResponse('ok')
