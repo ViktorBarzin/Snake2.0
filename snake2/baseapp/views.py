@@ -12,5 +12,3 @@ def index(request):
     user = request.user
 
     return render(request, 'index.html', locals())
-
-

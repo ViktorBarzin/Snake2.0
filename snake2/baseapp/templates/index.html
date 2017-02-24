@@ -9,10 +9,17 @@
        <div class="col-md-5 col-md-offset-1 pano-transparant">
          <div class="user-profile ">
                <div class="col-md-12 text-info">
-                 <p class="user">Hello, {{ user.username }}!</p>
-                 <form class="user" action="/account/login" method="GET">
+                 <div class="col-md-2">
+                   <img class="profile_pic" src= {{ user.profile.profile_picture_url }} />
+               </div>
+               <div class="col-md-8">
+               <p class="user">Hello, {{ user.username }}!</p>
+             </div>
+               <div class="col-md-2">
+                 <form class="" action="/account/login" method="GET">
                      {% csrf_token %}
-                     <input class="btn btn-primary user logout-btn" type="submit" value="Logout" />
+                     <input class="btn btn-primary logout-btn" type="submit" value="Logout" />
+                   </div>
                 </form>
                </div>
                <div class="col-md-12 user-info">

@@ -13,10 +13,17 @@ label {
 .pano-transparant{
   border-radius: 15px;
     width: 38% ;
-    min-height: 500px;
+    min-height: 700px;
     max-height: 600px;
     padding: 10px;
 
+}
+
+.profile_pic{
+  margin-top: 8px;
+  border-radius: 50px;
+  height: 100px;
+  width: 100px;
 }
 
 .btn{
@@ -39,6 +46,8 @@ label {
 
 .user{
   display: inline;
+  font-weight: bold;
+  font-size: 40px;
 
 }
 
