@@ -3,19 +3,23 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 # from game.SnakeLogic.point_snake_snakeWorld import SnakeWorld
 from game.SnakeLogic.temp_to_update import start_game, update_game
+import json
 
 # Create your views here.
 
 # global variable which is used for ocmmunication between client and snake
 # logic
 user_id_arrow = {}
-
+snk = ''
 
 @login_required(login_url = 'login')
 def index(request):
-    start_game(16,
+    global snk
+    snk = start_game(16,
                len(list(get_user_id_arrow().keys())),
                list(get_user_id_arrow().keys()))
+    # import ipdb; ipdb.set_trace()
+
     # Reset the user arrow dict so that everytime a game is created, the users
     # will be new with no initial moves
     # CAREFUL !!! PRONE TO BUGS !!! if something with arrows is not working,
@@ -32,7 +36,10 @@ def get_user_id_arrow():
 
 
 def update_game_field_ajax(request):
-    update_game(get_user_id_arrow())
+    res = update_game(get_user_id_arrow(), snk )
+    # import ipdb; ipdb.set_trace()# BREAKPOINT)
+
+    return HttpResponse(json.dumps(res))
 
 
 def get_arrows_ajax(request):
@@ -45,7 +52,7 @@ def get_arrows_ajax(request):
 
     # Update dict
     update_parsed_directions({user_id : arrow})
-    print('-' * 20 + str(user_id_arrow))
+    # print('-' * 20 + str(user_id_arrow))
     return HttpResponse()
 
 

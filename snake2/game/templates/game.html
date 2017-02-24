@@ -6,7 +6,7 @@
         {% block javascript %}
             <script>
             document.onkeydown = checkKey;
-            pressed_key = 'None'
+            pressed_key = 'down'
             function checkKey(e) {
                 e = e || window.event;
                 if (e.keyCode == '38') {
@@ -28,16 +28,16 @@
                 }
             }
 //--------------------
+var interval = 400
  var lobby_id = {{ lobby.id  }}
      setInterval(function(){
-
- data = $.getJSON('/game/get_arrows_ajax',{ 'params': [{'lobby_id': lobby_id},{ 'user_id': {{ user.id }}}, { 'key': pressed_key}]} ,
-                function(data){
-                    // data is the formatted string to show to user or call parsers
-                    console.log(data)
-                }
-            )
-   }, 2000)
+  data = $.getJSON('/game/get_arrows_ajax',{ 'params': [{'lobby_id': lobby_id},{ 'user_id': {{ user.id }}}, { 'key': pressed_key}]} ,
+                 function(data){
+                     // data is the formatted string to show to user or call parsers
+                     // console.log(data)
+                 }
+             )
+    },interval)
 
  //var lobby_id = {{ lobby.id  }}
  //data = $.getJSON('/game/get_arrows_ajax',{ 'params': [{'lobby_id': lobby_id},{ 'user_id': {{ user.id }}}, { 'key': pressed_key}]} ,
@@ -46,19 +46,22 @@
  //                    console.log(data)
  //                }
  //            )
- //
- //
 
 
-response = $.getJson('/game/update_game_ajax',{  }, function(){
-    // callback stuff
-    console.log(response)
+setInterval(function(){
+response = $.getJSON('/game/update_game_ajax',{  }, function(){
+    response.responseJSON.replace(/\n/g, '<br />')
+    $("#game").html('<div>' + response.responseJSON + ' </div>')
+
 })
+}
+, interval)
 
             </script>
         {% endblock %}
 
    </head>
     <body>
+        <div id='game'> </div>
     </body>
 </html>

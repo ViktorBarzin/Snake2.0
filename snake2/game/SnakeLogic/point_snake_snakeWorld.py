@@ -160,7 +160,7 @@ class SnakeWorld:
 
         self.world_size = world_size
         self.snakes = self.starting_pos  # self.prepare_snakes(num_of_players)
-        self.food = Point((8, 12), 'f')  # self.drop_food()
+        self.food = self.drop_food()
         self.num_of_players = num_of_players
         self.num_of_alive = num_of_players
         self.game_over = game_over
@@ -179,14 +179,15 @@ class SnakeWorld:
             for col in range(self.world_size):
                 if self.point_exists_in_snake(
                         Point((row, col))) and self.snake_alive(row, col):
-                    import ipdb; ipdb.set_trace()
+                    # import ipdb; ipdb.set_trace()
                     curr_snake = self.point_belongs_snake(Point((row, col)))
                     res += curr_snake.get_point_content(Point((row, col)))
                 elif self.food == Point((row, col)):
                     res += 'f'
                 else:
                     res += '.'
-            res += '\n'
+            # res += '\n'
+            res += '<br />'
 
         return res
 
@@ -247,7 +248,8 @@ class SnakeWorld:
         temp_dict = deepcopy(self.snakes)
         for s_id, snake in temp_dict.items():
             if self.in_other_snake(curr_head=snake.head, curr_id=s_id):
-                self.which_snake(snake.head).died()
+                # self.which_snake(snake.head).died()
+                snake.died()
                 self.snakes.pop(s_id, snake)
                 self.kill_game()
 
@@ -268,10 +270,10 @@ class SnakeWorld:
                     snake.grow()
             self.food = self.drop_food()
 
-    def handle_game(self):
+    def handle_game(self, commands):
         while not self.game_over:
             yield self.get_world()
-            self.move_snakes(self.get_directs())
+            self.move_snakes(commands)
             sleep(0.5)
         yield self.get_winner()
 
