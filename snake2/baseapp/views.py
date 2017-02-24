@@ -8,7 +8,6 @@ from lobby.models import Lobby
 
 @login_required(login_url='login')
 def index(request):
-    import ipdb; ipdb.set_trace()
     lobbies = Lobby.objects.all()
     user = request.user
 

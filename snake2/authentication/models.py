@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+from PIL import Image
+
 from lobby.models import Lobby
 # Create your models here.
 
@@ -15,7 +17,7 @@ class Profile(User):
     games_played = models.IntegerField(default=0)
     win_ratio = models.FloatField(default=0)
     # date_joined = models.DateTimeField()
-    profile_picture_url = models.CharField(max_length=255, null=True)
+    profile_picture_url = models.ImageField(upload_to='static/media/images/', default='static/media/images/images.jpg')
 
     def get_win_ratio(self):
         if games_played == 0:

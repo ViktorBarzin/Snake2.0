@@ -19,6 +19,7 @@
                  <p>Count of your game: {{ user.profile.games_played }}</p>
                  <p>You win game: {{ user.profile.games_won }}</p>
                  <p>Games played: {{ user.profile.games_played }}</p>
+                 <p>Games played: {{ user.profile.profile_picture_url }}</p>
                  <p>Choose lobby ----------></p>
                  <p>or</p>
                </div>
@@ -39,7 +40,7 @@
             </div>
             <ul class="user-list">
               {% for lobby in lobbies %}
-            <div class="col-md-12 lobby-background">  
+            <div class="col-md-12 lobby-background">
             <li class="list-text">  <a href="/lobby/{{ lobby.id}}" class="user-list">Lobby {{ lobby.id }} </a></li>
           </div>
               {% endfor %}
