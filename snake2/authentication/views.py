@@ -17,7 +17,8 @@ def register_view(request):
             # form.save()
             user = Profile.objects.create_user(username=form.data.get('username',''),
                 email=form.data.get('email', ''),
-                password=form.data.get('password', '')
+                password=form.data.get('password', ''),
+                profile_picture_url=form.data.get('image', '')
             )
             user.save()
             # return HttpResponse('ok')
@@ -49,4 +50,3 @@ def login(request):
         return HttpResponse('nema takav')
     form = LoginForm()
     return render(request, 'registration/login.html', locals())
-

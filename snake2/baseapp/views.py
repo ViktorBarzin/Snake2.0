@@ -8,7 +8,10 @@ from lobby.models import Lobby
 
 @login_required(login_url='login')
 def index(request):
+<<<<<<< HEAD
     # import ipdb; ipdb.set_trace()
+=======
+>>>>>>> image
     lobbies = Lobby.objects.all()
     user = request.user
 
