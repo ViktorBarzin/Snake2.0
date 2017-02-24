@@ -51,12 +51,99 @@ var interval = 400
 setInterval(function(){
 response = $.getJSON('/game/update_game_ajax',{  }, function(){
     response.responseJSON.replace(/\n/g, '<br />')
-    $("#game").html('<div>' + response.responseJSON + ' </div>')
+    $("#game").html("<div>" + fieldParser(response.responseText) + " </div>")
 
 })
 }
 , interval)
 
+function fieldParser(responsestr) {
+    var result =  ""
+    var blank = '<img src="/static/media/images/blankField.jpg" />'
+    var food = '<img src="/static/media/images/food.jpg" />'
+    var head1 = '<img src="/static/media/images/head1.jpg" />'
+    var body1 = '<img src="/static/media/images/body1.jpg" />'
+    var head2 = '<img src="/static/media/images/head2.jpg" />'
+    var body2 = '<img src="/static/media/images/body2.jpg" />'
+    var head3 = '<img src="/static/media/images/head3.jpg" />'
+    var body3 = '<img src="/static/media/images/body3.jpg" />'
+    var head4 = '<img src="/static/media/images/head4.jpg" />'
+    var body4 = '<img src="/static/media/images/body4.jpg" />'
+    for (var i = 0; i < responsestr.length; i++) {
+        switch (responsestr[i]){
+            case '.':
+                result += responsestr[i].replace('.', blank);
+                break;
+            case 'f':
+                result += responsestr[i].replace('f', food)
+                break;
+            case '1':
+                result += responsestr[i].replace('1', body1)
+                break; 
+            case '0':
+                result += responsestr[i].replace('0', head1)
+                break;
+            case '1':
+                result += responsestr[i].replace('1', body1)
+                break;
+            case '2':
+                result += responsestr[i].replace('2', head2)
+                break;
+            case '3':
+                result += responsestr[i].replace('3', body2)
+                break;
+            case '4':
+                result += responsestr[i].replace('4', head3)
+                break;
+            case '5':
+                result += responsestr[i].replace('5', body3)
+                break;
+            case '6':
+                result += responsestr[i].replace('6', head4)
+                break;
+            case '7':
+                result += responsestr[i].replace('7', body4)
+                break;       
+            default:
+                result += responsestr[i]
+        }
+    }
+    
+    return result
+}
+
+function setCharToImage() {
+    $("#game").each(function() { 
+            $(this).html($(this).text().replace(/[.]/g, 'DOT'))});
+
+    var text = document.getElementById('test').innerText;
+    var img = '<img src="static/media/images/blankField.jpg" />'
+
+    for (var i = 0; i < text.length; i++) {
+        text = text.replace(text[i], img);
+    }
+
+    // switch (char) {
+    //     case '.':
+            
+    //         break;
+        // case 'f':
+        //     img.src="static/media/images/images.jpeg";
+        //     break;
+        // case '0':
+        //     img.src="static/media/images/images.jpeg";
+        //     break;
+        // case '1':
+        //     img.src="static/media/images/images.jpeg";
+        //     break;
+        // case '2':
+        //     img.src="static/media/images/images.jpeg";
+        //     break;
+        // case '3':
+        //     img.src="static/media/images/images.jpeg";
+        //     break;    
+    //}
+}
             </script>
         {% endblock %}
 
