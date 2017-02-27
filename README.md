@@ -10,7 +10,7 @@ Project for HackBulgaria "Programming 101 with Python" end-of-course hackaton
 
 ![alt tag](http://i.imgur.com/VzgqTaC.png)
 
-# Requirements and usage
+# Requirements
 * Python 3
 * pip
 
@@ -22,3 +22,4 @@ cd snake2
 pip install -r requirements.txt
 python manage.py runserver
 ```
+Open a web browser and visit 127.0.0.1:8000
