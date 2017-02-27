@@ -9,3 +9,16 @@ Project for HackBulgaria "Programming 101 with Python" end-of-course hackaton
 ## Screenshot
 
 ![alt tag](http://i.imgur.com/VzgqTaC.png)
+
+# Requirements and usage
+..* Python 3
+..* pip
+
+# Setup
+
+```bash 
+git clone https://github.com/ViktorBarzin/Snake2.0.git
+cd snake2
+pip install -r requirements.txt
+python manage.py runserver
+```
