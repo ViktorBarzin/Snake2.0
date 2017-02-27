@@ -11,8 +11,8 @@ Project for HackBulgaria "Programming 101 with Python" end-of-course hackaton
 ![alt tag](http://i.imgur.com/VzgqTaC.png)
 
 # Requirements and usage
-..* Python 3
-..* pip
+* Python 3
+* pip
 
 # Setup
 
